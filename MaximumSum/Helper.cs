@@ -4,10 +4,10 @@
     using System.IO;
     public class Helper
     {
-        public int[,] ReadInput(string filename)
+        public static int[,] ReadInput(string fileName)
         {
             var length = 0;
-            using (var reader = new StreamReader(filename))
+            using (var reader = new StreamReader(fileName))
             {
                 var line = reader.ReadLine();
                 while (line != null)
@@ -19,7 +19,7 @@
 
             var collection = new int[length, length];
 
-            using (var reader = new StreamReader(filename))
+            using (var reader = new StreamReader(fileName))
             {
                 var row = 0;
                 string line;
@@ -38,7 +38,7 @@
             return collection;
         }
 
-        public void Display(int[,] collection)
+        public static void Display(int[,] collection)
         {
             var collectionSize = collection.GetLength(0);
 
