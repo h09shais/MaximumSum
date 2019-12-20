@@ -1,3 +1,5 @@
 .vs/
 MaximumSum/bin/Debug/
 MaximumSum/obj/
+MaximumSum.Test/bin/
+MaximumSum.Test/obj/

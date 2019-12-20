@@ -16,8 +16,8 @@
                 var collection = Helper.ReadInput("../../Matrix.txt");
                 var graph = new Graph(collection);
                 
-                Console.WriteLine("Max sum: {0}", graph.GetMaximumSum());
-                Console.WriteLine("Path: {0}", graph.GetMaximumSumPath());
+                Console.WriteLine("Max sum: {0}", graph.MaximumSum);
+                Console.WriteLine("Path: {0}", graph.MaximumSumPath);
             }
             catch (Exception exception)
             {
