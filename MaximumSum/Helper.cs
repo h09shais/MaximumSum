@@ -6,23 +6,33 @@
     {
         public int[,] ReadInput(string filename)
         {
-            using var reader = new StreamReader(filename);
-            var row = 0;
-            var length = int.Parse(reader.ReadLine() ?? throw new InvalidOperationException("Bad data!"));
+            var length = 0;
+            using (var reader = new StreamReader(filename))
+            {
+                var line = reader.ReadLine();
+                while (line != null)
+                {
+                    length++;
+                    line = reader.ReadLine();
+                }
+            }
 
             var collection = new int[length, length];
 
-            while (!reader.EndOfStream)
+            using (var reader = new StreamReader(filename))
             {
-                var tokens = reader.ReadLine()?.Split(new char[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
-                if (tokens == null) continue;
-
-                for (var i = 0; i < tokens.Length; i++)
+                var row = 0;
+                string line;
+                while ((line = reader.ReadLine()) != null)
                 {
-                    collection[row, i] = int.Parse(tokens[i]);
+                    var tokens = line.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                    for (var i = 0; i < tokens.Length; i++)
+                    {
+                        collection[row, i] = int.Parse(tokens[i]);
+                    }
+                    
+                    row++;
                 }
-
-                row++;
             }
 
             return collection;
