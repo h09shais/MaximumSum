@@ -1,63 +1,63 @@
 ﻿namespace MaximumSum
 {
     using System;
+    using System.Collections.Generic;
 
     public class Graph: IGraph
     {
         private readonly int[,] _collection;
+
+        private readonly Stack<int> _stack;
 
         private int CollectionSize => _collection.GetLength(0);
 
         public Graph(int[,] collection)
         {
             this._collection = collection;
+            this._stack = new Stack<int>();
         }
 
-        public int MaximumSum
+        public int MaximumSum => CalculatedSum();
+
+        private int CalculatedSum()
         {
-            get
+            for (var i = CollectionSize - 2; i >= 0; i--)
             {
-                for (var i = CollectionSize - 2; i >= 0; i--)
+                for (var j = 0; j <= i; j++)
                 {
-                    for (var j = 0; j <= i; j++)
+                    var seed = new Node {Weight = _collection[i, j]};
+                    var child1 = new Node {Weight = _collection[i + 1, j]};
+                    var child2 = new Node {Weight = _collection[i + 1, j + 1]};
+
+                    var maxWeight = GetMaxWeight(seed, child1, child2);
+                    if (maxWeight == null)
                     {
-                        var seed = new Node {Weight = _collection[i, j]};
-                        var child1 = new Node {Weight = _collection[i + 1, j]};
-                        var child2 = new Node {Weight = _collection[i + 1, j + 1]};
-
-                        if (child1.IsEven && child2.IsEven && seed.IsEven)
-                        {
-                            _collection[i, j] = 0;
-                        }
-
-                        else if (!child1.IsEven && !child2.IsEven && !seed.IsEven)
-                        {
-                            _collection[i, j] = 0;
-                        }
-                        else
-                        {
-                            var maxWeight = getMaxWeight(seed, child1, child2);
-                            seed.Weight += maxWeight;
-                            _collection[i, j] = seed.Weight;
-                        }
+                        continue;
                     }
-                }
 
-                return _collection[0, 0];
+                    var weight = maxWeight.Value;
+                    _stack.Push(weight);
+                    seed.Weight += weight;
+                    _collection[i, j] = seed.Weight;
+                }
             }
+
+            return _collection[0, 0];
         }
 
-        public string MaximumSumPath => string.Empty;
-        
+        public string MaximumSumPath => CalculatedPath();
 
-        private int getMaxWeight(Node seed, Node child1, Node child2)
+        private string CalculatedPath()
         {
-            if (child1.IsEven && child2.IsEven || !child1.IsEven && !child2.IsEven)
-            {
-                return Math.Max(child1.Weight, child2.Weight);
-            }
+            // TODO: Path finding
+            var result = string.Empty;
+            return result;
+        }
 
-            return child1.IsEven && !seed.IsEven || child2.Weight == 0 ? child1.Weight : child2.Weight;
+        private int? GetMaxWeight(Node seed, Node child1, Node child2)
+        {
+            // TODO: Even - Odd choices
+            return Math.Max(child1.Weight, child2.Weight);
         }
     }
 }

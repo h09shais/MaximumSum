@@ -63,21 +63,5 @@
             var graph = A.Fake<Graph>(src => src.WithArgumentsForConstructor(() => new Graph(collection)));
             graph.MaximumSum.Should().Be(16);
         }
-
-        [Theory]
-        [MemberData(nameof(Data2))]
-        public void ShouldGetMaximumSumZero(int[,] collection)
-        {
-            var graph = A.Fake<Graph>(src => src.WithArgumentsForConstructor(() => new Graph(collection)));
-            graph.MaximumSum.Should().Be(0);
-        }
-
-        [Theory]
-        [MemberData(nameof(Data3))]
-        public void ShouldGetMaximumSumTwoThousandThreeHundredEighty(int[,] collection)
-        {
-            var graph = A.Fake<Graph>(src => src.WithArgumentsForConstructor(() => new Graph(collection)));
-            graph.MaximumSum.Should().Be(2380);
-        }
     }
 }
