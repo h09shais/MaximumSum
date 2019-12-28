@@ -49,8 +49,7 @@
 
         private string CalculatedPath()
         {
-            // TODO: Path finding
-            var result = string.Empty;
+            var result = string.Join(" -> ", _stack.ToArray());
             return result;
         }
 
