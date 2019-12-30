@@ -13,7 +13,7 @@
         {
             try
             {
-                var collection = Helper.ReadInput("../../Matrix.txt");
+                var collection = Helper.ReadData("../../Matrix.txt");
                 var graph = new Graph(collection);
                 
                 Console.WriteLine("Max sum: {0}", graph.MaximumSum);
