@@ -1,8 +1,9 @@
-﻿namespace MaximumSum
+﻿namespace MaximumSum.Core
 {
     using System;
-    using System.Linq;
     using System.IO;
+    using System.Linq;
+
     public class Helper
     {
         public static string[] ReadData(string fileName)
@@ -17,4 +18,3 @@
         }
     }
 }
-
