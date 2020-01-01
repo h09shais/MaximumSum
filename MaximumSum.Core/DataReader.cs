@@ -6,29 +6,24 @@
 
     public class DataReader: IDataReader
     {
-        public Node Root { get; set; }
+        private readonly IGraphRepository _repository;
 
-        public DataReader BuildGraph(IGraphRepository repository)
+        public Node Root
         {
-            var rows = repository.GetGraph();
-
-            if (!rows.Any()) return new DataReader();
-
-            var rootValue = NullableTryParseInt(rows[0]);
-
-            if (rootValue == null) return new DataReader();
-
-            var root = new Node { Weight = (int)rootValue };
-
-            try
+            get
             {
+                var rows = _repository.GetGraph();
+                var rootValue = NullableTryParseInt(rows[0]);
+
+                var root = new Node { Weight = (int)rootValue };
                 BuildGraph(root, 0, rows, 0);
-                return new DataReader { Root = root };
+                return root;
             }
-            catch (Exception e)
-            {
-                return new DataReader();
-            }
+        }
+
+        public DataReader(IGraphRepository repository)
+        {
+            this._repository = repository;
         }
 
         private int? NullableTryParseInt(string token)

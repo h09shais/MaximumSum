@@ -6,12 +6,10 @@
     public class Graph : IGraph
     {
         private readonly IDataReader _graph;
-        private readonly IGraphRepository _repository;
 
-        public Graph(IDataReader graph, IGraphRepository repository)
+        public Graph(IDataReader graph)
         {
-            this._repository = repository;
-            this._graph = graph.BuildGraph(repository);
+            this._graph = graph;
         }
 
         private IEnumerable<int> Paths => MaxSumPathCalculator(_graph.Root, new List<Node>(), new List<int>());
