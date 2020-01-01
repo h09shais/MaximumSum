@@ -1,6 +1,7 @@
 ﻿namespace MaximumSum
 {
     using Autofac;
+    using Core;
 
     public class WriterModule : Autofac.Module
     {

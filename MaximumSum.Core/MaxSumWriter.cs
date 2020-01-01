@@ -1,7 +1,5 @@
-﻿namespace MaximumSum
+﻿namespace MaximumSum.Core
 {
-    using System;
-
     public class MaxSumWriter : IMaxSumWriter
     {
         private readonly IOutput _output;
@@ -16,8 +14,8 @@
 
         public void WriteMaxSum()
         {
-            this._output.Write(_graph.MaximumSum.ToString());
-            this._output.Write(_graph.MaximumSumPath);
+            this._output.Write($"Max sum: {_graph.MaximumSum.ToString()}");
+            this._output.Write($"Path: {_graph.MaximumSumPath}");
         }
     }
 }

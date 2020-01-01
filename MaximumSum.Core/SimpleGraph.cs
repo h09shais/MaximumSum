@@ -1,4 +1,4 @@
-﻿namespace MaximumSum
+﻿namespace MaximumSum.Core
 {
     public class SimpleGraph
     {

@@ -1,6 +1,7 @@
 ﻿namespace MaximumSum
 {
     using Autofac;
+    using Core;
 
     class Program
     {
