@@ -1,6 +1,5 @@
 ﻿namespace MaximumSum.Core
 {
-    using System;
     using System.Linq;
 
     public class DataReader: IDataReader
@@ -30,11 +29,6 @@
             if (rows.Length == leftIndex + 1) return;
 
             var rowItems = RowItems(rows, leftIndex);
-
-            if (rowItems.All(x => !x.HasValue))
-            {
-                throw new Exception("Invalid data");
-            }
 
             if (rowItems[rightIndex] != null)
             {

@@ -1,5 +1,6 @@
 ﻿namespace MaximumSum
 {
+    using System;
     using Autofac;
     using Core;
 
@@ -8,11 +9,18 @@
         private static IContainer Container { get; set; }
         static void Main(string[] args)
         {
-            var builder = new ContainerBuilder();
-            builder.RegisterModule(new WriterModule());
-            Container = builder.Build();
+            try
+            {
+                var builder = new ContainerBuilder();
+                builder.RegisterModule(new WriterModule());
+                Container = builder.Build();
 
-            WriteMaxSum();
+                WriteMaxSum();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
 
         public static void WriteMaxSum()
