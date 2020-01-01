@@ -2,66 +2,38 @@
 {
     using FakeItEasy;
     using Xunit;
+    using Core;
     using FluentAssertions;
 
     public class MaxSumTest
     {
-        public static TheoryData<int[,]> Data1
+        public static TheoryData<string[]> Data1
         {
             get
             {
-                var data = new [,]
+                var data = new []
                 {
-                    {1, 0, 0, 0},
-                    {8, 9, 0, 0},
-                    {1, 5, 9, 0},
-                    {4, 5, 2, 3},
+                    "1",
+                    "8 9",
+                    "1 5 9",
+                    "4 5 2 3",
                 };
 
-                return new TheoryData<int[,]> {data};
-            }
-        }
-
-        public static TheoryData<int[,]> Data2
-        {
-            get
-            {
-                var data = new[,]
-                {
-                    {215, 0, 0, 0},
-                    {192, 124, 0, 0},
-                    {117, 269, 442, 0},
-                    {218, 836, 347, 235},
-                };
-
-                return new TheoryData<int[,]> { data };
-            }
-        }
-
-        public static TheoryData<int[,]> Data3
-        {
-            get
-            {
-                var data = new[,]
-                {
-                    {215, 0, 0, 0, 0, 0},
-                    {192, 125, 0, 0, 0, 0},
-                    {117, 269, 442, 0, 0, 0},
-                    {218, 836, 347, 235, 0, 0},
-                    {320, 805, 522, 417, 345, 0},
-                    {229, 601, 728, 835, 133, 124}
-                };
-
-                return new TheoryData<int[,]> { data };
+                return new TheoryData<string[]> {data};
             }
         }
 
         [Theory]
         [MemberData(nameof(Data1))]
-        public void ShouldGetMaximumSumSixteen(int[,] collection)
+        public void ShouldGetMaximumSumSixteen(string[] data)
         {
-            var graph = A.Fake<Graph>(src => src.WithArgumentsForConstructor(() => new Graph(collection)));
-            graph.MaximumSum.Should().Be(16);
+            var repository = A.Fake<IGraphRepository>();
+            A.CallTo(() => repository.GetGraph()).Returns(data);
+
+            var reader = A.Fake<DataReader>(src => src.WithArgumentsForConstructor(() => new DataReader(repository)));
+            var graph = A.Fake<Graph>(src => src.WithArgumentsForConstructor(() => new Graph(reader)));
+
+            graph.MaxSum.Should().Be(16);
         }
     }
 }
