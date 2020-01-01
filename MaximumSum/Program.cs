@@ -1,6 +1,5 @@
 ﻿namespace MaximumSum
 {
-    using System;
     using Autofac;
 
     class Program
@@ -12,27 +11,10 @@
             builder.RegisterModule(new WriterModule());
             Container = builder.Build();
 
-            WriteDate();
-            //new Program().GetMaximumSum();
+            WriteMaxSum();
         }
 
-        private void GetMaximumSum()
-        {
-            try
-            {
-                var collection = Helper.ReadData("../../Matrix.txt");
-                var graph = new Graph(collection);
-                
-                Console.WriteLine("Max sum: {0}", graph.MaximumSum);
-                Console.WriteLine("Path: {0}", graph.MaximumSumPath);
-            }
-            catch (Exception exception)
-            {
-                Console.WriteLine(exception.Message);
-            }
-        }
-
-        public static void WriteDate()
+        public static void WriteMaxSum()
         {
             using (var scope = Container.BeginLifetimeScope())
             {
