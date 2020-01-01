@@ -14,7 +14,11 @@
                 fileContent = reader.ReadToEnd();
             }
 
-            return fileContent.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+            return 
+                fileContent.Split(new[]
+                {
+                    Environment.NewLine
+                }, StringSplitOptions.RemoveEmptyEntries).ToArray();
         }
     }
 }

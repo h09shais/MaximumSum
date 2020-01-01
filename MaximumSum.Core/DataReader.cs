@@ -17,37 +17,37 @@
             get
             {
                 var graph = _repository.GetGraph();
-                var rootValue = int.TryParse(graph[0], out var value) ? (int?)value : null;
+                var weight = int.TryParse(graph[0], out var value) ? (int?)value : null;
 
-                var root = new Node { Weight = rootValue };
-                BuildGraph(root, 0, graph, 0);
+                var root = new Node { Weight = weight };
+                BuildGraph(root, graph, 0, 0);
                 return root;
             }
         }
 
-        private void BuildGraph(Node node, int index, string[] rows, int rowIndex)
+        private void BuildGraph(Node node, string[] rows, int leftIndex, int rightIndex)
         {
-            if (rows.Length == rowIndex + 1) return;
+            if (rows.Length == leftIndex + 1) return;
 
-            var rowItems = RowItems(rows, rowIndex);
+            var rowItems = RowItems(rows, leftIndex);
 
             if (rowItems.All(x => !x.HasValue))
             {
                 throw new Exception("Invalid data");
             }
 
-            if (rowItems[index] != null)
+            if (rowItems[rightIndex] != null)
             {
-                node.Left = new Node { Weight = rowItems[index] };
+                node.Left = new Node { Weight = rowItems[rightIndex] };
 
-                BuildGraph(node.Left, index, rows, rowIndex + 1);
+                BuildGraph(node.Left, rows, leftIndex + 1, rightIndex);
             }
 
-            if (rowItems[index + 1] != null)
+            if (rowItems[rightIndex + 1] != null)
             {
-                node.Right = new Node { Weight = rowItems[index + 1] };
+                node.Right = new Node { Weight = rowItems[rightIndex + 1] };
 
-                BuildGraph(node.Right, index + 1, rows, rowIndex + 1);
+                BuildGraph(node.Right, rows, leftIndex + 1, rightIndex + 1);
             }
         }
 
