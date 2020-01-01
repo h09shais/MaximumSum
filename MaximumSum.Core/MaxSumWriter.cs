@@ -14,8 +14,8 @@
 
         public void WriteMaxSum()
         {
-            this._output.Write($"Max sum: {_graph.MaximumSum.ToString()}");
-            this._output.Write($"Path: {_graph.MaximumSumPath}");
+            this._output.Write($"Max sum: {_graph.MaxSum.ToString()}");
+            this._output.Write($"Path: {_graph.MaxSumPath}");
         }
     }
 }

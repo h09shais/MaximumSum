@@ -13,15 +13,15 @@
             this._repository = repository;
         }
 
-        public Node Root
+        public Node GraphElement
         {
             get
             {
-                var rows = _repository.GetGraph();
-                var rootValue = NullableTryParseInt(rows[0]);
+                var graph = _repository.GetGraph();
+                var rootValue = NullableTryParseInt(graph[0]);
 
                 var root = new Node { Weight = (int)rootValue };
-                BuildGraph(root, 0, rows, 0);
+                BuildGraph(root, 0, graph, 0);
                 return root;
             }
         }
@@ -31,11 +31,11 @@
             return int.TryParse(token, out var value) ? (int?)value : null;
         }
 
-        private void BuildGraph(Node parentNode, int parentNodeIndex, IReadOnlyList<string> rows, int parentRowIndex)
+        private void BuildGraph(Node node, int index, IReadOnlyList<string> rows, int rowIndex)
         {
-            if (rows.Count == parentRowIndex + 1) return;
+            if (rows.Count == rowIndex + 1) return;
 
-            var numbersInRows = rows[parentRowIndex + 1]
+            var numbersInRows = rows[rowIndex + 1]
                 .Trim().Split(' ')
                 .Select(NullableTryParseInt)
                 .ToArray();
@@ -45,18 +45,18 @@
                 throw new Exception("A row contains only null/non integers elements");
             }
 
-            if (numbersInRows[parentNodeIndex] != null)
+            if (numbersInRows[index] != null)
             {
-                parentNode.Left = new Node { Weight = (int)numbersInRows[parentNodeIndex] };
+                node.Left = new Node { Weight = (int)numbersInRows[index] };
 
-                BuildGraph(parentNode.Left, parentNodeIndex, rows, parentRowIndex + 1);
+                BuildGraph(node.Left, index, rows, rowIndex + 1);
             }
 
-            if (numbersInRows[parentNodeIndex + 1] != null)
+            if (numbersInRows[index + 1] != null)
             {
-                parentNode.Right = new Node { Weight = (int)numbersInRows[parentNodeIndex + 1] };
+                node.Right = new Node { Weight = (int)numbersInRows[index + 1] };
 
-                BuildGraph(parentNode.Right, parentNodeIndex + 1, rows, parentRowIndex + 1);
+                BuildGraph(node.Right, index + 1, rows, rowIndex + 1);
             }
         }
     }

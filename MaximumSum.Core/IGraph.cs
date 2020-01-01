@@ -2,8 +2,8 @@
 {
     public interface IGraph
     {
-        int MaximumSum { get; }
+        int MaxSum { get; }
 
-        string MaximumSumPath { get; }
+        string MaxSumPath { get; }
     }
 }

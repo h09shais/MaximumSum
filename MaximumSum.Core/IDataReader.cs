@@ -2,6 +2,6 @@
 {
     public interface IDataReader
     {
-        Node Root { get; }
+        Node GraphElement { get; }
     }
 }

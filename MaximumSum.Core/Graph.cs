@@ -18,7 +18,7 @@
             this._maxPath = new List<int>();
         }
 
-        private IEnumerable<int> Paths => MaxSumPathCalculator(_reader.Root, _path, _maxPath);
+        private IEnumerable<int> Paths => MaxSumPathCalculator(_reader.GraphElement, _path, _maxPath);
 
         private IEnumerable<int> MaxSumPathCalculator(Node node, ICollection<Node> path, IEnumerable<int> maxPath)
         {
@@ -57,8 +57,8 @@
             return maxPath;
         }
 
-        public int MaximumSum => Paths.Sum();
+        public int MaxSum => Paths.Sum();
 
-        public string MaximumSumPath => string.Join(", ", Paths);
+        public string MaxSumPath => string.Join(", ", Paths);
     }
 }

@@ -6,7 +6,7 @@
 
         public GraphRepository()
         {
-            Graph = Helper.ReadData("../../Matrix.txt");
+            Graph = Helper.ReadData("../../Graph.txt");
         } 
 
         public string[] GetGraph()
