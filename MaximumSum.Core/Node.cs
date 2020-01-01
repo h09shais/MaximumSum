@@ -6,8 +6,8 @@
 
         public Node Right { get; set; }
 
-        public int Weight { get; set; }
+        public int? Weight { get; set; }
 
-        public bool IsEven => Weight % 2 == 0;
+        public bool IsEven => Weight.HasValue && Weight.Value % 2 == 0;
     }
 }

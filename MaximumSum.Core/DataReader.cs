@@ -1,7 +1,6 @@
 ﻿namespace MaximumSum.Core
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
 
     public class DataReader: IDataReader
@@ -18,46 +17,46 @@
             get
             {
                 var graph = _repository.GetGraph();
-                var rootValue = NullableTryParseInt(graph[0]);
+                var rootValue = int.TryParse(graph[0], out var value) ? (int?)value : null;
 
-                var root = new Node { Weight = (int)rootValue };
+                var root = new Node { Weight = rootValue };
                 BuildGraph(root, 0, graph, 0);
                 return root;
             }
         }
 
-        private int? NullableTryParseInt(string token)
+        private void BuildGraph(Node node, int index, string[] rows, int rowIndex)
         {
-            return int.TryParse(token, out var value) ? (int?)value : null;
-        }
+            if (rows.Length == rowIndex + 1) return;
 
-        private void BuildGraph(Node node, int index, IReadOnlyList<string> rows, int rowIndex)
-        {
-            if (rows.Count == rowIndex + 1) return;
+            var rowItems = RowItems(rows, rowIndex);
 
-            var numbersInRows = rows[rowIndex + 1]
-                .Trim().Split(' ')
-                .Select(NullableTryParseInt)
-                .ToArray();
-
-            if (numbersInRows.All(x => !x.HasValue))
+            if (rowItems.All(x => !x.HasValue))
             {
-                throw new Exception("A row contains only null/non integers elements");
+                throw new Exception("Invalid data");
             }
 
-            if (numbersInRows[index] != null)
+            if (rowItems[index] != null)
             {
-                node.Left = new Node { Weight = (int)numbersInRows[index] };
+                node.Left = new Node { Weight = rowItems[index] };
 
                 BuildGraph(node.Left, index, rows, rowIndex + 1);
             }
 
-            if (numbersInRows[index + 1] != null)
+            if (rowItems[index + 1] != null)
             {
-                node.Right = new Node { Weight = (int)numbersInRows[index + 1] };
+                node.Right = new Node { Weight = rowItems[index + 1] };
 
                 BuildGraph(node.Right, index + 1, rows, rowIndex + 1);
             }
+        }
+
+        private int?[] RowItems(string[] rows, int rowIndex)
+        {
+            return rows[rowIndex + 1]
+                .Trim().Split(' ')
+                .Select(item => int.TryParse(item, out var value) ? (int?)value : null)
+                .ToArray();
         }
     }
 }

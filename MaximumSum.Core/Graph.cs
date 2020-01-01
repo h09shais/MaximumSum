@@ -29,7 +29,7 @@
 
             if (node.Left == null && node.Right == null)
             {
-                var newPath = path.Select(x => x.Weight).ToList();
+                var newPath = path.Select(x => x.Weight ?? 0).ToList();
 
                 maxPath = maxPath.ToList();
                 if (newPath.Sum() > maxPath.Sum())
