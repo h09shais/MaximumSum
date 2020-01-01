@@ -5,20 +5,26 @@
 
     public class Graph : IGraph
     {
-        private readonly IDataReader _graph;
+        private readonly IDataReader _reader;
 
-        public Graph(IDataReader graph)
+        private readonly ICollection<Node> _path;
+
+        private readonly IEnumerable<int> _maxPath;
+
+        public Graph(IDataReader reader)
         {
-            this._graph = graph;
+            this._reader = reader;
+            this._path = new List<Node>();
+            this._maxPath = new List<int>();
         }
 
-        private IEnumerable<int> Paths => MaxSumPathCalculator(_graph.Root, new List<Node>(), new List<int>());
+        private IEnumerable<int> Paths => MaxSumPathCalculator(_reader.Root, _path, _maxPath);
 
         private IEnumerable<int> MaxSumPathCalculator(Node node, ICollection<Node> path, IEnumerable<int> maxPath)
         {
             if (!path.Any())
             {
-                path.Add(node);
+                _path.Add(node);
             }
 
             if (node.Left == null && node.Right == null)
@@ -36,16 +42,16 @@
 
             if (node.Left != null && node.IsEven != node.Left.IsEven)
             {
-                path.Add(node.Left);
+                _path.Add(node.Left);
                 maxPath = MaxSumPathCalculator(node.Left, path, maxPath);
-                path.Remove(node.Left);
+                _path.Remove(node.Left);
             }
 
             if (node.Right != null && node.IsEven != node.Right.IsEven)
             {
-                path.Add(node.Right);
+                _path.Add(node.Right);
                 maxPath = MaxSumPathCalculator(node.Right, path, maxPath);
-                path.Remove(node.Right);
+                _path.Remove(node.Right);
             }
 
             return maxPath;

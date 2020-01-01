@@ -8,6 +8,11 @@
     {
         private readonly IGraphRepository _repository;
 
+        public DataReader(IGraphRepository repository)
+        {
+            this._repository = repository;
+        }
+
         public Node Root
         {
             get
@@ -19,11 +24,6 @@
                 BuildGraph(root, 0, rows, 0);
                 return root;
             }
-        }
-
-        public DataReader(IGraphRepository repository)
-        {
-            this._repository = repository;
         }
 
         private int? NullableTryParseInt(string token)
